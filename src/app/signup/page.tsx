@@ -2,28 +2,36 @@
 
 import React,{useState} from 'react'
 import axios from 'axios';
-import toast from 'react-hot-toast';
-const Signup = () => {
+import toast, { Toaster } from 'react-hot-toast';
+import {useRouter} from "next/navigation";
 
-  
+const Signup = () => {
+  const router = useRouter();
   const [formData,setformData] = useState({
     username:"",
     email:"",
     password:""
   });
   const onSignUp = async() =>{
-    const response = axios.post("/api/users/signup",formData);
+    try {
+      const response = axios.post("/api/users/signup",formData);
     const data = (await response).data;
     console.log("data ui signup ", data);
-    if (response) {
-    toast.success("registered successfully")
+    toast.success('You have regostered successfully'); 
+    if(data){
+      router.push("/login")
+    }
+      
+    } catch (error:any) {
+      console.log("Signup failed", error.message);
+     toast.error(error.message) 
     }
     
   }
 
   return (
     <div className='bg-black flex flex-col h-screen w-full justify-center items-center'>
-
+      <Toaster />
       <div className='flex flex-col'>
         <label htmlFor="username" className='text-lg text-white  font-semibold'>Username</label>
         <input type="text" id="username" value={formData.username} 

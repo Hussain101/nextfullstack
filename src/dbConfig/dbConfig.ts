@@ -8,7 +8,7 @@ export default async function connect() {
             console.log("Connected to MongoDB");
         })
         connection.on('error',(errr)=>{
-            console.log(errr,"Connected to MongoDB");
+            console.log(errr,"Can't Connect to MongoDB");
         })
     } catch (error) {
         

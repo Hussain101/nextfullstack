@@ -1,46 +1,53 @@
 import connect from "../../../../dbConfig/dbConfig";
-import { NextRequest,NextResponse } from "next/server";
-import bcryptjs from "bcryptjs";
 import User from "../../../../models/userModels";
+import { NextRequest, NextResponse } from "next/server";
+import bcryptjs from "bcryptjs";
 
+connect()
 
-connect();
-
-export  async function POST(request: NextRequest) {
-    console.log(request,"this is request");
+export async function POST(request: NextRequest){
     try {
-        const reqBody = await request.json();
-        console.log(" POST ~ reqBody:", reqBody)
-        const {username,email,password} = reqBody;
+        const reqBody = await request.json()
+        const {username, email, password} = reqBody
 
-        const userfind = await User.findOne({email});
-        console.log(" POST ~ userfind:", userfind)
+        console.log(reqBody);
 
-        if (userfind) {
-            return NextResponse.json({error: "User alreadu exist"}, {status:400})
+        //check if user already exists
+        const user = await User.findOne({email})
+        console.log("🚀 ~ file: route.ts:20 ~ POST ~ user:", user)
+
+        if(user){
+            return NextResponse.json({error: "User already exists"}, {status: 400})
         }
 
-        const salt = await bcryptjs.genSalt(10);
-        const hashpassword = await bcryptjs.hash(password,salt);
+        //hash password
+        const salt = await bcryptjs.genSalt(10)
+        const hashedPassword = await bcryptjs.hash(password, salt)
 
         const newUser = new User({
-            username : username ,
-            email: email,
-            password: hashpassword
-        });
-        
+            username,
+            email,
+            password: hashedPassword
+        })
 
         const savedUser = await newUser.save()
-        console.log(" POST ~ savedUser:", savedUser)
+        console.log(savedUser);
+
+       
+
+       
+
         return NextResponse.json({
-
-            message:"successfully registered",
+            message: "User created successfully",
             success: true,
-            
+            savedUser
         })
-    } catch (error) {
         
-    }
-    
-}
+        
 
+
+    } catch (error: any) {
+        return NextResponse.json({error: error.message}, {status: 500})
+
+    }
+}
