@@ -8,7 +8,13 @@ import {useRouter} from "next/navigation";
 const page = () => {
 
   const onLogin= async () =>{
-    
+    try {
+      const resposes = await axios.post("./api/users/login",formData);
+      console.log(resposes,"response");
+     localStorage.setItem("token",resposes?.data?.token)
+    } catch (error) {
+      
+    }
   }
   const [formData,setformData] = useState({
     

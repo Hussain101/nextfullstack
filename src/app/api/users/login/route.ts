@@ -9,6 +9,7 @@ connect()
 export async function POST (request: NextRequest) {
    try {
     const reqBody = await request.json();
+    console.log("🚀 ~ file: route.ts:12 ~ POST ~ reqBody:", reqBody)
     const {email,password} = reqBody;
     const user = await User.findOne({email});
 
