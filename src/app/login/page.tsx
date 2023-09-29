@@ -1,26 +1,29 @@
 "use client"
 
-import React,{useState} from 'react'
+import React,{useReducer, useState} from 'react'
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import {useRouter} from "next/navigation";
 
 const page = () => {
-
-  const onLogin= async () =>{
-    try {
-      const resposes = await axios.post("./api/users/login",formData);
-      console.log(resposes,"response");
-     localStorage.setItem("token",resposes?.data?.token)
-    } catch (error) {
-      
-    }
-  }
+  const router = useRouter()
   const [formData,setformData] = useState({
     
     email:"",
     password:""
   });
+  const [disable,setdisable] = useState(true);
+  const onLogin= async () =>{
+    try {
+      const resposes = await axios.post("./api/users/login",formData);
+      console.log(resposes,"response");
+     localStorage.setItem("token",resposes?.data);
+     toast.success("Login succesfully ");
+     router.push("/profile")
+    } catch (error) {
+      toast.error("fill all fields")
+    }
+  }
   return (
     <div className='bg-black flex flex-col h-screen w-full justify-center items-center'>
       <Toaster />
