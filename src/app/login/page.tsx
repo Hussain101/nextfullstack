@@ -25,7 +25,7 @@ const page = () => {
     }
   }
   return (
-    <div className='bg-black flex flex-col h-screen w-full justify-center items-center'>
+    <div className='bg-black flex overflow-x-auto flex-col h-screen w-full justify-center items-center'>
       <Toaster />
       <div className='flex flex-col'>
         
@@ -41,7 +41,12 @@ const page = () => {
         />
         <label htmlFor="password" className='text-lg text-white  font-semibold'>Password</label>
         <input type="password" id="password" value={formData.password} 
-        
+         onChange={(e) =>{
+          setformData({
+            ...formData,
+            password:e.target.value
+          }) 
+      }}
         className='p-2 rounded-lg focus:outline-none'
         />
         <button 

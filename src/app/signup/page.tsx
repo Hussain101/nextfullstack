@@ -1,9 +1,10 @@
 "use client"
 
 import React,{useState} from 'react'
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import {useRouter} from "next/navigation";
+import { data } from 'autoprefixer';
 
 const Signup = () => {
   const router = useRouter();
@@ -24,7 +25,8 @@ const Signup = () => {
       
     } catch (error:any) {
       console.log("Signup failed", error.message);
-     toast.error(error.message) 
+     toast.error(error.message)
+     
     }
     
   }
