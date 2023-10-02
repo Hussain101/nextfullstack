@@ -4,6 +4,7 @@ import React,{useReducer, useState} from 'react'
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import {useRouter} from "next/navigation";
+import Link from 'next/link';
 
 const page = () => {
   const router = useRouter()
@@ -60,6 +61,7 @@ const page = () => {
         className='p-2 text-lg font-semibold text-white'>
           login
         </button>
+        <Link href={"/signup"} className='p-2 bg-red-500'>Signup</Link>
       </div>
     </div>
   )

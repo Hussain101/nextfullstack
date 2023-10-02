@@ -5,6 +5,7 @@ import axios, { HttpStatusCode } from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import {useRouter} from "next/navigation";
 import { data } from 'autoprefixer';
+import Link from 'next/link';
 
 const Signup = () => {
   const router = useRouter();
@@ -70,6 +71,7 @@ const Signup = () => {
         className='p-2 text-lg font-semibold text-white'>
           SignUp
         </button>
+        <Link href="/login" className='bg-red-600 p-2'></Link>
       </div>
     </div>
   )
