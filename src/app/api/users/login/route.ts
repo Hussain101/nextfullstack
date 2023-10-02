@@ -30,16 +30,18 @@ export async function POST (request: NextRequest) {
         email: user.email
     }
     const SECRET = "HUSSAINAHMEDSIDDIQUI"
-    const token = await jwt.sign(tokenData,SECRET,{expiresIn: "1d"});
+    const token =await jwt.sign(tokenData,SECRET,{expiresIn: "1d"});
+    console.log("🚀 ~ file: route.ts:34 ~ POST ~ token:", token)
 
     
     const response = NextResponse.json({
         message:"Login successfully",
         success: true,
     })
-    response.cookies.set("token",token,{
+    const cookies = response.cookies.set("token",token,{
         httpOnly :true ,
     });
+    console.log("🚀 ~ file: route.ts:44 ~ POST ~ cookies:", cookies)
 
     return response;
 

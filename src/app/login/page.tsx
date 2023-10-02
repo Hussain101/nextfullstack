@@ -17,9 +17,15 @@ const page = () => {
     try {
       const resposes = await axios.post("./api/users/login",formData);
       console.log(resposes,"response");
+      // const data = resposes.data.stringyfy()
+      // console.log("🚀 ~ file: page.tsx:21 ~ onLogin ~ data:", data)
      localStorage.setItem("token",resposes?.data);
      toast.success("Login succesfully ");
-     router.push("/profile")
+     router.push("/profile");
+     if (resposes) {
+      const userdata = localStorage.setItem("userdata",resposes.data)
+      console.log("🚀 ~ file: page.tsx:25 ~ onLogin ~ userdata:", userdata)
+     }
     } catch (error) {
       toast.error("fill all fields")
     }
