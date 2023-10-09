@@ -2,9 +2,7 @@ import { NextURL } from "next/dist/server/web/next-url";
 import { NextResponse,NextRequest } from "next/server";
 
 export function middleware(request : NextRequest){
-    console.log('====================================');
-    console.log(request);
-    console.log('====================================');
+   
 
     const path = request.nextUrl.pathname
     const token = request.cookies.get('token')?.value || "";

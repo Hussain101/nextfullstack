@@ -1,15 +1,29 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
+import Loader from "../../components/Loader"
 const Profile = () => {
   const router = useRouter()
+  const [loader,setLoader] = useState(true);
+ const [data,setdata] =useState<any>("")
+
+  const Getdata =async () => {
+    try {
+      const response = await axios.get("/api/users/me");
+      setdata(response.data.data)
+      
+      setTimeout(() => {
+        setLoader(false);
+      }, 1000);
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
   const logout = async() =>{
-    
     try {
       const response = await axios.get("/api/users/logout");
-      console.log("🚀 ~ file: page.tsx:10 ~ logout ~ response:", response)
       router.push("/");
       toast.success("logout succsessfully")
 
@@ -17,15 +31,27 @@ const Profile = () => {
       toast.error(error.message)
     }
   }
+  useEffect(() => {
+   Getdata()
+  }, [])
+  
   return (
-    <div className='bg-black'>
+    <>
+    {
+      loader === true ? <Loader />:<div className='bg-black h-screen flex flex-col justify-center items-center'>
       <Toaster />
+
       <div>
-        <button className='bg-white text-2xl' onClick={logout}>
+        <p  className='text-white'>Username is <span className='bg-yellow-700 py-2 px-4 my-3 '>{data.username}</span></p>
+      </div>
+      <div>
+        <button className='bg-red-600 text-white p-2 rounded-lg text-2xl' onClick={logout}>
           Logoout
         </button>
       </div>
     </div>
+    }
+    </>
   )
 }
 

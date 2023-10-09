@@ -5,11 +5,9 @@ import jwt from "jsonwebtoken";
 export const getjsonwebtoken  = (request: NextRequest) =>{
     try {
         const SECRET = "HUSSAINAHMEDSIDDIQUI";
-        const SECRETtt = "HUSSAINAHMEDSIDDIQUI";
         const token = request.cookies.get("token")?.value || "";
-        const decodeToken = jwt.verify(token,SECRET);
-        console.log("🚀 ~ file: getjsonwebtoken.ts:10 ~ getjsonwebtoken ~ decodeToken:", decodeToken)
-        return decodeToken;
+        const decodeToken:any = jwt.verify(token,SECRET);
+        return decodeToken.id;
     } catch (error) {
         throw new Error(error.message);
         
