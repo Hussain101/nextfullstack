@@ -8,6 +8,7 @@ connect();
 export async function GET(request:NextRequest) {
     try {
         const userId = getjsonwebtoken(request);
+        console.log("🚀 ~ file: route.tsx:11 ~ GET ~ userId:", userId)
     const user = await User.findOne({_id:userId}).select("-password");
     return NextResponse.json({
         message: "User Found",

@@ -18,7 +18,9 @@ const Profile = () => {
         setLoader(false);
       }, 1000);
     } catch (error) {
-      toast.error(error.message)
+      console.log("🚀 ~ file: page.tsx:21 ~ Getdata ~ error:", error)
+      toast.error(error.message);
+      logout()
     }
   }
   const logout = async() =>{
