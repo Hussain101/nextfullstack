@@ -33,7 +33,8 @@ export async function POST(request: NextRequest){
         const savedUser = await newUser.save()
         console.log(savedUser);
         
-        await sendEmail({email,emailType: "VERIFY", userId: savedUser._id})
+       const verify = await sendEmail({email,emailType: "VERIFY", userId: savedUser._id})
+       console.log("🚀 ~ file: route.ts:37 ~ POST ~ verify:", verify)
 
         return NextResponse.json({
             message: "User created successfully",
