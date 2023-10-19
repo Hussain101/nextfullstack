@@ -6,9 +6,11 @@ import toast, { Toaster } from 'react-hot-toast';
 import {useRouter} from "next/navigation";
 import { data } from 'autoprefixer';
 import Link from 'next/link';
+import Loader from '../../components/Loader';
 
 const Signup = () => {
   const router = useRouter();
+  const [loader, setloader] = useState(false);
   const [formData,setformData] = useState({
     username:"",
     email:"",
@@ -16,8 +18,10 @@ const Signup = () => {
   });
   const onSignUp = async() =>{
     try {
+      setloader(true);
       const response = axios.post("/api/users/signup",formData);
     const data = (await response).data;
+    setloader(false);
     console.log("data ui signup ", data);
     toast.success('You have regostered successfully'); 
     if(data){
@@ -26,6 +30,7 @@ const Signup = () => {
       
     } catch (error:any) {
       console.log("Signup failed", error.message);
+      setloader(false);
      toast.error(error.message)
      
     }
@@ -33,7 +38,9 @@ const Signup = () => {
   }
 
   return (
-    <div className='bg-black flex flex-col h-screen w-full justify-center items-center'>
+    <>
+    {
+      loader ? <Loader />:<div className='bg-black flex flex-col h-screen w-full justify-center items-center'>
       <Toaster />
       <div className='flex flex-col'>
         <label htmlFor="username" className='text-lg text-white  font-semibold'>Username</label>
@@ -68,12 +75,14 @@ const Signup = () => {
         />
         <button 
         onClick={onSignUp}
-        className='p-2 text-lg font-semibold text-white'>
+        className='p-2 text-lg font-semibold text-white bg-green-500 my-2'>
           SignUp
         </button>
-        <Link href="/login" className='bg-red-600 p-2'></Link>
+        <Link href="/login" className='bg-red-600 p-2 text-white font-semibold text-center'>Login directly</Link>
       </div>
     </div>
+    }
+    </>
   )
 }
 

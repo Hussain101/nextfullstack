@@ -37,7 +37,7 @@ const VerifyEmail = () => {
     }, [])
     
     useEffect(()=>{
-      if (token.length>0 || token==="") {
+      if (token) {
         verifyUserEmail()
       }
       console.log("this runs");
