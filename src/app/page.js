@@ -6,7 +6,7 @@ export default function Home() {
    <div>
      <p>
       you are at Home
-
+      perform crud operation using the react redux
      </p>
      <Link href={"/login"}>Login</Link>
    </div>
